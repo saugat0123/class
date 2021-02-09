@@ -14,7 +14,9 @@ class RepoAddStudent: MyApiRequest() {
     //Add Student
     suspend fun addStudent(student: Student): AddStudentResponse{
         return apiRequest {
-
+            studentAPI.addStudent(
+                ServiceBuilder.token!!, student
+            )
         }
     }
 }
