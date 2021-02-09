@@ -47,18 +47,18 @@ class AddStudentActivity : AppCompatActivity() {
         val address = etAddress.text.toString()
         var gender = ""
         when {
-            rdoFemale.isSelected -> {
+            rdoFemale.isChecked -> {
                 gender = "Female"
             }
-            rdoMale.isSelected -> {
+            rdoMale.isChecked -> {
                 gender = "Male"
             }
-            rdoOthers.isSelected -> {
+            rdoOthers.isChecked -> {
                 gender = "Others"
             }
         }
 
-        val student = Student(fullName, age, gender, address)
+        val student = Student(fullname= fullName,age= age, gender=gender, address=address)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val studentRepository = RepoAddStudent()
@@ -75,7 +75,7 @@ class AddStudentActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@AddStudentActivity,
-                        "Username cannot be duplicate", Toast.LENGTH_SHORT
+                        ex.toString(), Toast.LENGTH_SHORT
                     ).show()
                 }
             }
