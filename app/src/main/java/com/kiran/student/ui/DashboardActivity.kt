@@ -9,15 +9,21 @@ import com.kiran.student.entity.Student
 
 class DashboardActivity : AppCompatActivity() {
     private lateinit var btnAddStudent: Button
+    private lateinit var btnViewStudent: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
         btnAddStudent = findViewById(R.id.btnAddStudent)
+        btnViewStudent = findViewById(R.id.btnViewStudent)
 
         btnAddStudent.setOnClickListener {
             startActivity(Intent(this,AddStudentActivity::class.java))
+        }
+
+        btnViewStudent.setOnClickListener {
+            startActivity(Intent(this,ViewStudentsActivity::class.java))
         }
     }
 }

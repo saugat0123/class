@@ -6,6 +6,7 @@ import com.kiran.student.api.StudentAPI
 import com.kiran.student.api.UserAPI
 import com.kiran.student.entity.Student
 import com.kiran.student.response.AddStudentResponse
+import com.kiran.student.response.GetAllStudentsResponse
 
 class RepoAddStudent: MyApiRequest() {
 
@@ -17,6 +18,12 @@ class RepoAddStudent: MyApiRequest() {
             studentAPI.addStudent(
                 ServiceBuilder.token!!, student
             )
+        }
+    }
+
+    suspend fun getAllStudents(): GetAllStudentsResponse{
+        return apiRequest {
+            studentAPI.viewStudents(ServiceBuilder.token!!)
         }
     }
 }

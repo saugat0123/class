@@ -61,7 +61,7 @@ class RegisterActivity : AppCompatActivity() {
                         withContext(Main) {
                             Toast.makeText(
                                 this@RegisterActivity,
-                                "Username cannot be duplicate", Toast.LENGTH_SHORT
+                                ex.toString(), Toast.LENGTH_SHORT
                             ).show()
                         }
                     }
