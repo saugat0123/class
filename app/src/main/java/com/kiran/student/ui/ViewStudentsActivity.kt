@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kiran.student.R
 import com.kiran.student.adapter.StudentAdapter
 import com.kiran.student.entity.Student
-import com.kiran.student.repository.RepoAddStudent
+import com.kiran.student.repository.RepoStudent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
@@ -32,7 +32,7 @@ class ViewStudentsActivity : AppCompatActivity() {
     private fun loadStudents() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val studentRepository = RepoAddStudent()
+                val studentRepository = RepoStudent()
                 val response = studentRepository.getAllStudents()
                 if(response.success==true){
                     // Put all the student details in lstStudents

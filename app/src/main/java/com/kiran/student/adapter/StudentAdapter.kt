@@ -1,5 +1,6 @@
 package com.kiran.student.adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kiran.student.R
 import com.kiran.student.entity.Student
+import com.kiran.student.repository.RepoStudent
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class StudentAdapter (
     private val lstStudents:ArrayList<Student>,
@@ -40,11 +47,51 @@ class StudentAdapter (
         holder.tvGender.text = student.gender
 
         holder.btnDelete.setOnClickListener{
-            lstStudents.removeAt(position)
-            notifyItemRemoved(position)
-            notifyDataSetChanged()
-            notifyItemRangeChanged(position,lstStudents.size)
-            Toast.makeText(context, "Student Deleted!!", Toast.LENGTH_SHORT).show()
+//            lstStudents.removeAt(position)
+//            notifyItemRemoved(position)
+//            notifyDataSetChanged()
+//            notifyItemRangeChanged(position,lstStudents.size)
+//            Toast.makeText(context, "Student Deleted!!", Toast.LENGTH_SHORT).show()
+
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Delete student")
+            builder.setMessage("Are you sure you want to delete ${student.fullname} ??")
+            builder.setIcon(android.R.drawable.ic_delete)
+            builder.setPositiveButton("Yes") { _, _ ->
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val studentRepository = RepoStudent()
+                            val response = studentRepository.deleteStudent(student._id!!)
+                        if (response.success == true) {
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(
+                                    context,
+                                    "Student Deleted",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            withContext(Main) {
+                                lstStudents.remove(student)
+                                notifyDataSetChanged()
+                            }
+                        }
+                    } catch (ex: Exception) {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                context,
+                                ex.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+            builder.setNegativeButton("No") { _, _ ->
+            }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
         }
 
         when(student.gender){

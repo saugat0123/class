@@ -8,8 +8,7 @@ import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import com.kiran.student.R
 import com.kiran.student.entity.Student
-import com.kiran.student.repository.RepoAddStudent
-import com.kiran.student.repository.RepoUser
+import com.kiran.student.repository.RepoStudent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -61,7 +60,7 @@ class AddStudentActivity : AppCompatActivity() {
         val student = Student(fullname= fullName,age= age, gender=gender, address=address)
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val studentRepository = RepoAddStudent()
+                val studentRepository = RepoStudent()
                 val response = studentRepository.addStudent(student)
                 if(response.success == true){
                     withContext(Dispatchers.Main) {
