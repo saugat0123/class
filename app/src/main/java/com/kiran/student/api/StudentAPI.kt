@@ -18,7 +18,7 @@ interface StudentAPI {
         @Body student: Student
     ): Response<AddStudentResponse>
 
-    @GET ("student/")
+    @GET ("student/all/")
     suspend fun viewStudents(
         @Header ("Authorization") token: String,
     ): Response<GetAllStudentsResponse>
